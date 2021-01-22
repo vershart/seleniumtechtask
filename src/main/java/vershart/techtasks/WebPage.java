@@ -10,7 +10,7 @@ public abstract class WebPage {
     protected WebDriverWait wait;
     protected Actions actionsBuilder;
 
-    public WebPage(WebDriver driver) {
+    protected WebPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver, 3);
         actionsBuilder = new Actions(driver);

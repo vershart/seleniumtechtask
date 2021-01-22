@@ -2,24 +2,35 @@ package vershart.techtasks;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public final class VacanciesPage extends WebPage {
 
-    // //a[text()='Test Automation Engineer']
-    private final By linkToTestAutomationEngineer = By.xpath("//li[@id='menu-item-3249']/a");
-    private final WebElement link = wait
-            .withMessage("Waiting for link to Test Automation Engineer to appear")
-            .until(ExpectedConditions.visibilityOfElementLocated(linkToTestAutomationEngineer));
+    private static final By linkToTestAutomationEngineer = By.xpath("//li[@id='menu-item-3249']/a");
 
-    public VacanciesPage(WebDriver driver) {
+    private VacanciesPage(WebDriver driver) {
         super(driver);
     }
 
-    public TestAutomationEngineerPage navigateToTestAutomationEngineerVacancy() {
-        link.click();
-        return new TestAutomationEngineerPage(driver);
+    public Either<TestAutomationEngineerPage, Exception> navigateToTestAutomationEngineerVacancy() {
+        actionsBuilder
+                .moveToElement(driver.findElement(linkToTestAutomationEngineer))
+                .click()
+                .build()
+                .perform();
+        return TestAutomationEngineerPage.getInstance(driver);
     }
 
+    public static Either<VacanciesPage, Exception> getInstance(WebDriver driver) {
+        VacanciesPage vacanciesPage = new VacanciesPage(driver);
+        try {
+            new WebDriverWait(driver, 3)
+                    .withMessage(String.format("Waiting for page to load by founding element %s", linkToTestAutomationEngineer.toString()))
+                    .until(ExpectedConditions.visibilityOfElementLocated(linkToTestAutomationEngineer));
+            return Either.left(vacanciesPage);
+        } catch (Exception ex) {
+            return Either.right(ex);
+        }
+    }
 }
