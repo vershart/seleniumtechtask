@@ -8,19 +8,21 @@ public class AppTest extends BaseTest
 {
 
     private final String rootUrl = "https://ctco.lv/";
-    private final int profSkillsAndQualificationsCount = 5;
+    private final int profSkillsAndQualificationsCountExpected = 5;
 
 
     @Test
     public void testCtcoDotLv() {
 
         HomePage homePage = new HomePage(driver, rootUrl);
-        TestAutomationEngineerPage page = homePage
-                .navigateToCareersPage()
-                .navigateToVacanciesPage()
-                .navigateToTestAutomationEngineerVacancy();
+        homePage.mouseOverCareers();
+        int profSkillsAndQualificationsCount = homePage
+                .mouseOverVacancies()
+                .navigateToTestAutomationEngineerVacancy()
+                .getProfSkillsAndQualificationsCount();
 
-        Assert.assertEquals(page.getProfSkillsAndQualificationsCount(), profSkillsAndQualificationsCount);
+
+        Assert.assertEquals(profSkillsAndQualificationsCount, profSkillsAndQualificationsCountExpected);
 
     }
 
