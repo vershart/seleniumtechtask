@@ -4,8 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public abstract class WebPage
-{
+public abstract class WebPage {
 
     protected WebDriver driver;
     protected WebDriverWait wait;

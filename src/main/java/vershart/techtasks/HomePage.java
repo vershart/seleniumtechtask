@@ -6,13 +6,16 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public final class HomePage extends WebPage {
 
-    private By linkToCareers = By.xpath("//li[@id='menu-item-127']/a");
-    private By linkToVacancies = By.xpath("//li[@id='menu-item-131']/a");
-    private By linkToTestAutomationEngineer = By.xpath("//li[@id='menu-item-3249']/a");
+    private final By linkToCareers = By.xpath("//li[@id='menu-item-127']/a");
+    private final By linkToVacancies = By.xpath("//li[@id='menu-item-131']/a");
 
     public HomePage(WebDriver driver, String rootUrl) {
         super(driver);
         driver.get(rootUrl);
+        wait
+                .withMessage("Waiting for link to Careers to appear")
+                .until(ExpectedConditions.visibilityOfElementLocated(linkToCareers));
+
     }
 
     public void mouseOverCareers() {
@@ -20,6 +23,9 @@ public final class HomePage extends WebPage {
                 .moveToElement(driver.findElement(linkToCareers))
                 .build()
                 .perform();
+        wait
+                .withMessage("Waiting for link to Vacancies to appear")
+                .until(ExpectedConditions.visibilityOfElementLocated(linkToVacancies));
     }
 
     public VacanciesPage mouseOverVacancies() {
@@ -29,7 +35,6 @@ public final class HomePage extends WebPage {
                 .build()
                 .perform();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(linkToTestAutomationEngineer));
         return new VacanciesPage(driver);
     }
 
