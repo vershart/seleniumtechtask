@@ -4,8 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public final class CareersPage extends WebPage
-{
+public final class CareersPage extends WebPage {
 
     private By linkToVacancies = By.xpath("//a[text()='Vacancies']");
     // //div[1]/div[2]/div[2]/div[1]/div[1]/a

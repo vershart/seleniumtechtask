@@ -1,31 +1,32 @@
 package vershart.techtasks;
 
-import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.junit.After;
+import org.junit.Assert;
 
-public class AppTest 
+public class AppTest extends BaseTest
 {
 
     private final String rootUrl = "https://ctco.lv/";
     private final int profSkillsAndQualificationsCount = 5;
 
+
     @Test
-    public void testCtcoDotLv() throws InterruptedException {
+    public void testCtcoDotLv() {
 
-        // Assuming chromedriver is installed and available in PATH environment variable
-        // System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\Selenium\\chromedriver.exe");
-
-        WebDriver driver = new ChromeDriver();
         HomePage homePage = new HomePage(driver, rootUrl);
         TestAutomationEngineerPage page = homePage
                 .navigateToCareersPage()
                 .navigateToVacanciesPage()
                 .navigateToTestAutomationEngineerVacancy();
 
-        Assert.assertTrue(page.getProfSkillsAndQualificationsCount() == profSkillsAndQualificationsCount);
-        driver.close();
+        Assert.assertEquals(page.getProfSkillsAndQualificationsCount(), profSkillsAndQualificationsCount);
 
     }
+
+    @After
+    public void closeDriver() {
+        if (driver != null) driver.close();
+    }
+
 }

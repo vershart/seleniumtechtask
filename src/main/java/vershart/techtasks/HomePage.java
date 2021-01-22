@@ -4,8 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public final class HomePage extends WebPage
-{
+public final class HomePage extends WebPage {
     private By linkToCareers = By.xpath("//li[@id='menu-item-127']/a");
 
     public HomePage(WebDriver driver, String rootUrl) {
@@ -15,7 +14,7 @@ public final class HomePage extends WebPage
 
     public CareersPage navigateToCareersPage() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(linkToCareers))
-            .click();
+                .click();
         return new CareersPage(driver);
     }
 
