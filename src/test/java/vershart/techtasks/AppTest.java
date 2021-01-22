@@ -1,11 +1,10 @@
 package vershart.techtasks;
 
-import org.junit.Test;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Test;
 
-public class AppTest extends BaseTest
-{
+public class AppTest extends BaseTest {
 
     private final String rootUrl = "https://ctco.lv/";
     private final int profSkillsAndQualificationsCountExpected = 5;
