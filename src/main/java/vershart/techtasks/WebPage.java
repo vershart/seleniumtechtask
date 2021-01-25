@@ -2,18 +2,17 @@ package vershart.techtasks;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public abstract class WebPage {
+public abstract class WebPage extends WebDriverWaitHelper {
 
-    protected WebDriver driver;
-    protected WebDriverWait wait;
-    protected Actions actionsBuilder;
+    protected final WebDriver driver;
+    protected final Actions actionsBuilder;
 
-    protected WebPage(WebDriver driver) {
+    public WebPage(WebDriver driver, IErrorListener errorListener) {
+        super(driver, errorListener);
+
         this.driver = driver;
-        wait = new WebDriverWait(driver, 3);
-        actionsBuilder = new Actions(driver);
+        this.actionsBuilder = new Actions(driver);
     }
 
 }

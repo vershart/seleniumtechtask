@@ -6,6 +6,10 @@ import org.junit.Test;
 
 public class AppTest extends BaseTest {
 
+    private void onTestFailed(ExpectedConditionFailedException ex) {
+        Assert.fail(ex.getMessage());
+    }
+
     @Test
     public void testCtcoDotLv() {
 
@@ -13,54 +17,23 @@ public class AppTest extends BaseTest {
         final int profSkillsAndQualificationsCountExpected = 5;
         final String rootUrl = "https://ctco.lv/";
 
-        HomePage homePage = HomePage.getInstance(driver, rootUrl)
-                .map(
-                        (left) -> left,
-                        (right) -> {
-                            Assert.fail(right.getMessage());
-                            return null;
-                        });
+        driver.get(rootUrl);
 
-        homePage.mouseOverCareers()
-                .mapRight(
-                        (right) -> {
-                            Assert.fail(right.getMessage());
-                            return right;
-                        });
-
-        VacanciesPage vacanciesPage = homePage.navigateToVacancies()
-                .map(
-                        (left) -> left,
-                        (right) -> {
-                            Assert.fail(right.getMessage());
-                            return null;
-                        });
-
-        TestAutomationEngineerPage testAutomationEngineerPage = vacanciesPage.navigateToTestAutomationEngineerVacancy()
-                .map(
-                        (left) -> left,
-                        (right) -> {
-                            Assert.fail(right.getMessage());
-                            return null;
-                        });
-
-        profSkillsAndQualificationsCount = testAutomationEngineerPage.getProfSkillsAndQualificationsCount()
-                .map(
-                        (left) -> left,
-                        (right) -> {
-                            Assert.fail(right.getMessage());
-                            return 0;
-                        }
-                );
+        profSkillsAndQualificationsCount = new HomePage(driver, this::onTestFailed)
+                .mouseOverCareers()
+                .navigateToVacancies()
+                .navigateToTestAutomationEngineerVacancy()
+                .getProfSkillsAndQualificationsCount();
 
         Assert.assertEquals(profSkillsAndQualificationsCount, profSkillsAndQualificationsCountExpected);
-
 
     }
 
     @After
     public void closeDriver() {
-        if (driver != null) driver.close();
+        if (driver != null) {
+            driver.close();
+        }
     }
 
 }
